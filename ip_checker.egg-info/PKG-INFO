@@ -1,0 +1,22 @@
+Metadata-Version: 2.1
+Name: ip_checker
+Version: 1.0
+Summary: A simple IP address checker app
+Home-page: https://your-github-or-website-url
+Author: Your Name
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
+# IP Checker
+
+This Python package fetches the public IP address of your machine using an external service.
+
+## Installation
+
+To install the package from a source distribution, use:
+
+```bash
+pip install .

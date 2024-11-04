@@ -1,0 +1,44 @@
+from html.parser import HTMLParser
+import urllib.request
+
+# Dictionary to store colors and their hex values
+colours = {}
+
+# Custom HTMLParser class to extract color names and hex values
+class ColorHexParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.current_tag = ""
+        self.current_color_name = ""
+    
+    def handle_starttag(self, tag, attrs):
+        self.current_tag = tag
+        
+    def handle_data(self, data):
+        # Extract color names from <a> tags
+        if self.current_tag == 'a' and '#' in data:
+            self.current_color_name = data.strip()
+        # Extract hex values from <code> tags
+        elif self.current_tag == 'code' and data.startswith('#'):
+            hex_code = data.strip()
+            if self.current_color_name:
+                colours[self.current_color_name] = hex_code
+                self.current_color_name = ""  # Reset for next entry
+
+# URL of the colorhexa website
+url = 'https://www.colorhexa.com/color-names'
+
+# Fetch the HTML content from the website
+with urllib.request.urlopen(url) as response:
+    html_content = response.read().decode('utf-8')
+
+# Create an instance of the parser and feed it the HTML content
+parser = ColorHexParser()
+parser.feed(html_content)
+
+# Print out the color names and their hex values
+for color_name, hex_value in colours.items():
+    print(f"{color_name} {hex_value}")
+
+# Print the total number of colors
+print(f"\nTotal colors: {len(colours)}")
